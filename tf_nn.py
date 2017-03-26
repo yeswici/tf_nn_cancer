@@ -1,4 +1,4 @@
-#p21 -> cd tf_nn_cancer -> python tf_nn.py
+#p21 {or PNNHealth_ADC_v9.3} -> cd tf_nn_cancer -> python tf_nn.py
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
