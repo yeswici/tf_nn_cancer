@@ -1,3 +1,4 @@
+#p21 -> cd tf_nn_cancer -> python tf_nn.py
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -31,13 +32,16 @@ CANCER_TRAINING = "cancer_training.csv"
 CANCER_TEST = "cancer_test.csv"
 
 # Load datasets.
-training_set = tf.contrib.learn.datasets.base.load_csv(filename=CANCER_TRAINING,
-                                                       target_dtype=np.int)
-test_set = tf.contrib.learn.datasets.base.load_csv(filename=CANCER_TEST,
-                                                   target_dtype=np.int)
+training_set = tf.contrib.learn.datasets.base.load_csv_with_header(filename=CANCER_TRAINING,
+                                                       target_dtype=np.int, features_dtype=np.float32)
+test_set = tf.contrib.learn.datasets.base.load_csv_with_header(filename=CANCER_TEST,
+                                                   target_dtype=np.int, features_dtype=np.float32)
+
+# Specify that all features have real-value data
+feature_columns = [tf.contrib.layers.real_valued_column("", dimension=4)]
 
 # Build 3 layer DNN with 10, 20, 10 units respectively.
-classifier = tf.contrib.learn.DNNClassifier(hidden_units=[10, 20, 10],
+classifier = tf.contrib.learn.DNNClassifier(feature_columns=feature_columns, hidden_units=[10, 20, 10],
                                             n_classes=2,
                                             model_dir="/tmp/cancer_model")
 
@@ -54,5 +58,9 @@ print('Accuracy: {0:f}'.format(accuracy_score))
 # Classify two new cancer tumor samples.
 new_samples = np.array(
     [[5,10,8,4,7,4,8,11,2], [5,1,1,1,1,1,1,1,2]], dtype=float)
+#new_samples = tf.cast(new_samples, tf.float32)
 y = classifier.predict(new_samples)
-print('Predictions: {}'.format(str(y)))
+
+#y = tf.cast(y, tf.float32)
+#print(list(y))
+print('Predictions: {}'.format(str(list(y))))
