@@ -1,5 +1,5 @@
 #accuracy of the model fit
 Accuracy: 1.000000
 
-#predict result of the two samples
+#predict result of the two samples - [5,10,8,4,7,4,8,11,2], [5,1,1,1,1,1,1,1,2]
 Predictions: [1, 0]
